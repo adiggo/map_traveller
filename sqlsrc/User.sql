@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS Users.User(
     time_modified datetime,
     PRIMARY KEY(`id`)
 )
-    
+
