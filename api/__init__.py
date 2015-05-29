@@ -8,6 +8,5 @@ import os
 
 
 app = Flask(__name__)
-bcrypt = Bcrypt(app)
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://luss:luss@localhost:3306/Users'
 db = SQLAlchemy(app)

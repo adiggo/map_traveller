@@ -1,4 +1,4 @@
-from map_traveller import db
+from api import db
 
 
 from sqlalchemy import ForeignKey

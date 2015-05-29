@@ -1,5 +1,5 @@
-from map_traveller import db
-from model import user
+from api import db
+from api.model import user
 
 db.create_all()
 
