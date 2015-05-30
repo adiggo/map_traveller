@@ -4,11 +4,11 @@ from sqlalchemy import func
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
-class user(db.Model):
+class User(db.Model):
 
     __tablename__ = "user"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.BigInteger, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100))
     password = db.Column(db.String(200))
@@ -26,11 +26,11 @@ class user(db.Model):
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
 
-class place(db.Model):
+class Place(db.Model):
 
     __tablename__ = "place"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.BigInteger, primary_key=True)
     city = db.Column(db.String(100), nullable=False)
     state = db.Column(db.String(100), nullable = False)
     country = db.Column(db.String(100), nullable = False)
@@ -41,4 +41,11 @@ class place(db.Model):
         self.country = country
         self.continent = continent
 
-
+class UserPlaceLink(db.Model):
+    __tablename__ = "user_place"
+    
+    user_id = db.Column(db.BigInteger, primary_key = True)
+    place_id = db.Column(db.BigInteger, primary_key = True)
+    def __init__(self, user_id, place_id):
+        self.user_id = user_id
+        self.place_id = place_id
