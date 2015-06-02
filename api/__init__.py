@@ -7,6 +7,16 @@ import os
 
 
 app = Flask(__name__)
+app.config['OAUTH_CREDENTIALS'] = {
+    'facebook': {
+        'id': '**',
+        'secret': '*'
+    },
+    'twitter': {
+        'id': '*',
+        'secret': '*'
+    }
+}
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://luss:luss@localhost:3306/Users'
 db = SQLAlchemy(app)
