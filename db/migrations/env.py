@@ -6,7 +6,9 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + '/../../conf')
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + '/../../api')
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + '/../../')
 from database import Base
+from map_traveller import app
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -56,19 +58,18 @@ def run_migrations_online():
 
     """
     alembic_config = config.get_section(config.config_ini_section)
-    from map_traveller import app
-    alembic_config['sqlalchemy.url'] = app.config[SQLALCHEMY_DATABASE_URI]
+    alembic_config['sqlalchemy.url'] = app.config['SQLALCHEMY_DATABASE_URI']
 
     connectable = engine_from_config(
         alembic_config,
         prefix='sqlalchemy.',
         poolclass=pool.NullPool)
 
-    with connectable.connect() as connection:
-        context.configure(
-            connection=connection,
-            target_metadata=target_metadata
-        )
+    connection = connectable.connect()
+    context.configure(
+        connection=connection,
+        target_metadata=target_metadata
+    )
 
         # with context.begin_transaction():
         #     context.run_migrations()
