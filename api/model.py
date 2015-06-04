@@ -9,7 +9,7 @@ class User(db.Model):
     __tablename__ = "user"
 
     id = db.Column(db.BigInteger, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    username = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100))
     password = db.Column(db.String(200))
     fid = db.Column(db.String(200))
@@ -21,10 +21,36 @@ class User(db.Model):
     update_time = db.Column(db.DateTime)
 
 
-    def __init__(self, name, email, password):
-        self.name = name
+    def __init__(self, username, email, password, fid, wid, dob, profile_photo, create_time, update_time):
+        self.username = username 
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
+        self.fid = fid
+        self.wid = wid
+        self.dob = dob
+        self.profile_photo = profile_photo
+        self.create_time = create_time
+        self.update_time = update_time
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return unicode(self.id)
+
+    def __repr__(self):
+        return '<User %r>' % (self.username)
+
+@lm.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
 
 class Place(db.Model):
 
