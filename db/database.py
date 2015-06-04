@@ -7,9 +7,15 @@ sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + '/../lib')
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker, create_session
 from sqlalchemy.ext.declarative import declarative_base
-from map_traveller import app
 
-engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], convert_unicode=True, pool_recycle=3600)
+engine = None
+
+def init_engine(uri, **kwargs):
+    """ create the engine when needed """
+    global engine
+    engine = create_engine(uri, **kwargs)
+    return engine
+# engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], convert_unicode=True, pool_recycle=3600)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
