@@ -3,7 +3,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + '/../../../db')
 from database import Base
 from sqlalchemy import Column, String, BigInteger, DateTime, Table, ForeignKey
-
+from flask.ext.bcrypt import generate_password_hash
 class User(Base):
 
     __tablename__ = "user"
@@ -22,4 +22,5 @@ class User(Base):
     def __init__(self, name, email, password):
         self.name = name
         self.email = email
-        self.password = bcrypt.generate_password_hash(password)
+        self.password = generate_password_hash(password, 10)
+        #self.password = bcrypt.generate_password_hash(password)
