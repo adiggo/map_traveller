@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import sys
 import os
 sys.path.insert(0, os.path.dirname(
@@ -32,11 +32,15 @@ def default_error_handle(error=None):
         error.code        
 
 
+@app.route('/welcome')
+def welcome():
+    return render_template("welcome.html")
+
 from api.health.views import health
 from api.users.views import users
 app.register_blueprint(health, url_prefix="/health")
 app.register_blueprint(users, url_prefix="/users")
 
-
+# set debug as true currently
 if __name__ == '__main__':
     app.run(debug=True)
